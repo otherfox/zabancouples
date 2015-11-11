@@ -11,11 +11,6 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php
-		// Post thumbnail.
-		zabancouples_post_thumbnail();
-	?>
-
 	<header class="entry-header">
 		<?php
 			if ( is_single() ) :
@@ -25,7 +20,6 @@
 			endif;
 		?>
 	</header><!-- .entry-header -->
-
 	<div class="entry-content">
 		<?php
 			/* translators: %s: Name of current post */
@@ -53,7 +47,7 @@
 	?>
 
 	<footer class="entry-footer">
-		<?php zabancouples_entry_meta(); ?>
+		
 		<?php edit_post_link( __( 'Edit', 'zabancouples' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-footer -->
 

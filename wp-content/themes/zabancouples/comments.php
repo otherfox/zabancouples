@@ -30,8 +30,6 @@ if ( post_password_required() ) {
 			?>
 		</h2>
 
-		<?php zabancouples_comment_nav(); ?>
-
 		<ol class="comment-list">
 			<?php
 				wp_list_comments( array(
@@ -40,10 +38,8 @@ if ( post_password_required() ) {
 					'avatar_size' => 56,
 				) );
 			?>
-		</ol><!-- .comment-list -->
-
-		<?php zabancouples_comment_nav(); ?>
-
+		</ol>
+    
 	<?php endif; // have_comments() ?>
 
 	<?php
