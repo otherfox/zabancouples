@@ -10,11 +10,6 @@
  */
 ?>
 </div><!-- .site-content -->
-	<footer id="colophon" class="site-footer" role="contentinfo">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'zabancouples' ) ); ?>"><?php printf( __( 'Proudly powered by %s', 'zabancouples' ), 'WordPress' ); ?></a>
-		</div>
-	</footer>
 </div>
 <?php wp_footer(); ?>
 </body>

@@ -23,7 +23,7 @@
 	<?php if ( 'post' == get_post_type() ) : ?>
 
 		<footer class="entry-footer">
-			<?php zabancouples_entry_meta(); ?>
+			
 			<?php edit_post_link( __( 'Edit', 'zabancouples' ), '<span class="edit-link">', '</span>' ); ?>
 		</footer><!-- .entry-footer -->
 

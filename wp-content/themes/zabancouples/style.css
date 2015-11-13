@@ -8,3 +8,86 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: zabancouples
 */
+
+
+/*
+ * Base classes
+ */
+body {
+    font-family: 'Proxima Nova Regular', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: white;
+    background-color: #fff;
+}
+
+
+/*
+ * Header
+ */
+#header {
+    background: url('/wp-content/uploads/2015/11/bannerimg.jpg');
+    background-size: cover;
+    height: 460px;
+}
+
+#header .cover {
+    background-color: #92554a;
+    opacity: 0.85;
+    height: 261px;
+}
+
+#header .drawer a {
+    background-color: transparent;
+    color: white;
+    padding: 1rem 2rem;
+    /* margin-top: 30px; */
+    border: 2px solid white;
+    border-bottom-right-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    text-decoration: none;
+    font-size: 1.9rem;
+}
+
+#header .drawer p {
+    color: white;
+    font-size: 1.9rem;
+    line-height: 2.4rem;
+    margin-top: -10px;
+}
+
+
+/*
+ * Navigation
+ */
+.nav {
+    font-family: 'Proxima Nova Light';
+    font-size: 1.6rem;
+    list-style: none;
+    border-top: 3px solid white;
+    width: 50%;
+    margin: 0.7rem auto 0 auto;
+    padding: 0;
+}
+
+.nav li {
+    display: inline-block;
+    margin: 0 0.5rem;
+    color: white;
+    line-height: 3rem;
+}
+
+.nav li a, .nav li a:visited {
+    color: white;
+    padding: 0.7rem 1.3rem;
+    text-decoration: none;
+    border: 0px solid white;    
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.nav li a:hover {
+    color: #80392c;
+    background-color: white;
+}
