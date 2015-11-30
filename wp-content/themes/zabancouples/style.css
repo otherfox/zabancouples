@@ -145,3 +145,10 @@ h5 { font-size: 1em; }
 .footer_nav li a:hover, .footer_nav li.current_page_item a {
   color: #80392c;
 }
+
+/* Image Size */
+
+.full-width, .full-width .vc_figure, .full-width .vc_figure div,
+.full-width .vc_figure img {
+  width: 100%;
+}
