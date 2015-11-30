@@ -9,85 +9,139 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: zabancouples
 */
 
-
 /*
  * Base classes
  */
+
+ * {
+   box-sizing: border-box;
+ }
+
 body {
     font-family: 'Proxima Nova Regular', Helvetica, Arial, sans-serif;
-    font-size: 1rem;
+    font-size: 14px;
     line-height: 1.5;
-    color: white;
+    color: #333;
     background-color: #fff;
 }
 
+a { text-decoration: none;}
+p { font-size: 1em; }
+h1 { font-size: 3em; }
+h2 { font-size: 2.5em; }
+h3 { font-size: 2em; }
+h4 { font-size: 1.5em; }
+h5 { font-size: 1em; }
+
+/*
+ * Container
+ */
+
+.container {
+  width: 100%;
+  padding: 0 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 760px ) {
+  .container {
+    width: 80%;
+    padding: 0;
+  }
+}
+
+/* fixes visual composer overflow issues */
+#main {
+  overflow:hidden;
+}
 
 /*
  * Header
  */
-#header {
-    background: url('/wp-content/uploads/2015/11/bannerimg.jpg');
-    background-size: cover;
-    height: 460px;
-}
 
-#header .cover {
+#header {
     background-color: #92554a;
     opacity: 0.85;
     height: 261px;
 }
 
-#header .drawer a {
-    background-color: transparent;
-    color: white;
-    padding: 1rem 2rem;
-    /* margin-top: 30px; */
-    border: 2px solid white;
-    border-bottom-right-radius: 1rem;
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-    text-decoration: none;
-    font-size: 1.9rem;
+#header .logo img {
+  width: 80%;
 }
-
-#header .drawer p {
-    color: white;
-    font-size: 1.9rem;
-    line-height: 2.4rem;
-    margin-top: -10px;
-}
-
 
 /*
- * Navigation
+ * Header Navigation
  */
-.nav {
-    font-family: 'Proxima Nova Light';
-    font-size: 1.6rem;
-    list-style: none;
-    border-top: 3px solid white;
-    width: 50%;
-    margin: 0.7rem auto 0 auto;
-    padding: 0;
+.header_nav {
+  font-family: 'Proxima Nova Light';
+  list-style: none;
+  max-width: 860px;
+  width: 100%;
+  border-top: 3px solid #fff;
+  margin: 0 auto;
+  text-align: left;
+  padding: 0;
 }
 
-.nav li {
-    display: inline-block;
-    margin: 0 0.5rem;
-    color: white;
-    line-height: 3rem;
+.header_nav li {
+  display: inline-block;
+  margin: 0 0.4em 0 0;
+  font-size: 2em;
+  line-height: 2em;
+  color: #fff;
 }
 
-.nav li a, .nav li a:visited {
-    color: white;
-    padding: 0.7rem 1.3rem;
-    text-decoration: none;
-    border: 0px solid white;    
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+.header_nav li:last-child {
+  margin-right: 0;
 }
 
-.nav li a:hover {
-    color: #80392c;
-    background-color: white;
+.header_nav li a, .header_nav li a:visited {
+  color: #fff;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border: 0px solid #fff;
+  border-bottom-left-radius: 0.8em;
+  border-bottom-right-radius: 0.8em;
+}
+
+.header_nav li a:hover, .header_nav li.current_page_item a {
+  color: #80392c;
+  background-color: #fff;
+}
+
+/* Footer */
+
+#footer {
+  background-color: #fff;
+  overflow: visible;
+  padding: 1.5em 0;
+  width: 100%;
+  height: 7em;
+}
+
+/* Footer Nav */
+
+.footer_nav {
+  list-style: none;
+  float: right;
+  padding: 0;
+  margin: 0;
+}
+
+.footer_nav li {
+  display: inline-block;
+  margin: 0 0.5em 0 0;
+  font-size: 1.8em;
+  height:2.4em;
+  line-height: 2.4em;
+}
+
+.footer_nav li a, .footer_nav li a:visited {
+  color: #aaa;
+  padding: 0.5em 1em;
+}
+
+.footer_nav li a:hover, .footer_nav li.current_page_item a {
+  color: #80392c;
 }
