@@ -1,7 +1,7 @@
 <?php
 /**
  * Zaban Couples functions and definitions
- * 
+ *
  * @package Brain_Bytes
  * @subpackage Zaban_Couples
  * @since Zaban Couples 1.0
@@ -28,7 +28,7 @@ if (!function_exists('zabancouples_setup')) {
          * See: https://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
          */
         add_theme_support('post-thumbnails');
-        
+
         // Default thumbnail
         set_post_thumbnail_size(825, 510, true);
 
@@ -76,15 +76,36 @@ add_action( 'wp_head', 'zabancouples_javascript_detection', 0 );
  * @since Zaban Couples 1.0
  */
 function zabancouples_scripts() {
-    
+
     wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.min.css');
     wp_enqueue_style('typography', get_template_directory_uri() . '/css/typography.css');
-    wp_enqueue_style('grid', get_template_directory_uri() . '/css/grid.css');   
+    wp_enqueue_style('grid', get_template_directory_uri() . '/css/grid.css');
     wp_enqueue_style('utility', get_template_directory_uri() . '/css/utility.css');
-    
-    wp_enqueue_style('zabancouples-style', get_stylesheet_uri());    
-    
+
+    wp_enqueue_style('zabancouples-style', get_stylesheet_uri());
+
     wp_enqueue_script('zabancouples-script', get_template_directory_uri() . '/js/functions.js', array('jquery'), '20150330', true);
 }
 
 add_action( 'wp_enqueue_scripts', 'zabancouples_scripts' );
+
+/**
+ * Zaban Couples Custom Header
+ *
+ * @since Zaban Couples 1.0
+ */
+
+$custom_header_args = array(
+  'width' => 445,
+	'flex-width' => true,
+	'flex-height' => true,
+	'default-image' => get_template_directory_uri() . '/images/logo.png',
+);
+
+add_theme_support( 'custom-header', $custom_header_args );
+
+/**
+ * show/hide admin bar
+ */
+
+show_admin_bar( false );

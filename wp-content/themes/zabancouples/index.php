@@ -1,7 +1,7 @@
 <?php
 /**
  * Index
- * 
+ *
  * @package Brain_Bytes
  * @subpackage Zaban_Couples
  * @since Zaban Couples 1.0
@@ -15,9 +15,9 @@ get_header(); ?>
 		<?php if ( have_posts() ) : ?>
 
 			<?php if ( is_home() && ! is_front_page() ) : ?>
-				<header>
+				<!-- <header>
 					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
+				</header> -->
 			<?php endif; ?>
 
 			<?php
