@@ -10,18 +10,35 @@ Text Domain: zabancouples
 */
 
 /*
- * Base classes
+ * =============================================================== *
+ * Notes:
+ * =============================================================== *
+ *
+ * Colors:
+ * --------------------------------------------------------------- *
+ * brown: #80392c > e.g. Main Theme Color
+ * dk-blue: #405bc0 > e.g. Sidebar Contact Form Header
+ * md-blue: #4d7bde > e.g. Button BG
+ * lt-blue: #7493ee > e.g. Home Footer BG
+ * md-gray: #939393 > e.g. Text Gray
+ * lt-gray: #ebebeb > e.g. Sidebar Contact Form BG
+ * white: #ffffff
  */
 
- * {
-   box-sizing: border-box;
- }
+/*
+ * Base classes
+ * --------------------------------------------------------------- *
+ */
+
+* {
+ box-sizing: border-box;
+}
 
 body {
     font-family: 'Proxima Nova Regular', Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1.5;
-    color: #333;
+    color: #939393;
     background-color: #fff;
 }
 
@@ -33,11 +50,21 @@ h3 { font-size: 2em; }
 h4 { font-size: 1.5em; }
 h5 { font-size: 1em; }
 
+/* Colors */
+
+.c-brown { color: #80392c; }
+.c-blue { color: #405bc0; }
+
 /*
  * Container
+ * --------------------------------------------------------------- *
  */
 
-.container {
+#main {
+ overflow:hidden; /* fixes visual composer overflow issues */
+}
+
+.site-content .container, .site-content .vc_row-fluid {
   width: 100%;
   padding: 0 10px;
   margin-left: auto;
@@ -45,25 +72,26 @@ h5 { font-size: 1em; }
 }
 
 @media (min-width: 760px ) {
-  .container {
-    width: 80%;
+  .site-content .container, .site-content .vc_row-fluid {
+    width: 75%;
     padding: 0;
   }
 }
 
-/* fixes visual composer overflow issues */
-#main {
-  overflow:hidden;
+.site-content .full-width {
+  width: 100%;
 }
+
 
 /*
  * Header
+ * --------------------------------------------------------------- *
  */
 
 #header {
-    background-color: #92554a;
-    opacity: 0.85;
-    height: 261px;
+  background-color: #92554a;
+  opacity: 0.85;
+  height: 261px;
 }
 
 #header .logo img {
@@ -71,13 +99,15 @@ h5 { font-size: 1em; }
 }
 
 /*
- * Header Navigation
+ * Header Nav
  */
+
 .header_nav {
   font-family: 'Proxima Nova Light';
   list-style: none;
   max-width: 860px;
   width: 100%;
+  font-size: 30px;
   border-top: 3px solid #fff;
   margin: 0 auto;
   text-align: left;
@@ -86,8 +116,8 @@ h5 { font-size: 1em; }
 
 .header_nav li {
   display: inline-block;
-  margin: 0 0.4em 0 0;
-  font-size: 2em;
+  margin: 0 0 0 0;
+  font-size: 1em;
   line-height: 2em;
   color: #fff;
 }
@@ -98,7 +128,7 @@ h5 { font-size: 1em; }
 
 .header_nav li a, .header_nav li a:visited {
   color: #fff;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.9em;
   text-decoration: none;
   border: 0px solid #fff;
   border-bottom-left-radius: 0.8em;
@@ -110,7 +140,10 @@ h5 { font-size: 1em; }
   background-color: #fff;
 }
 
-/* Footer */
+/*
+ * Footer
+ * --------------------------------------------------------------- *
+ */
 
 #footer {
   background-color: #fff;
@@ -120,11 +153,14 @@ h5 { font-size: 1em; }
   height: 7em;
 }
 
-/* Footer Nav */
+/*
+ * Footer Nav
+ */
 
 .footer_nav {
   list-style: none;
   float: right;
+  font-size: 25px;
   padding: 0;
   margin: 0;
 }
@@ -132,9 +168,9 @@ h5 { font-size: 1em; }
 .footer_nav li {
   display: inline-block;
   margin: 0 0.5em 0 0;
-  font-size: 1.8em;
-  height:2.4em;
-  line-height: 2.4em;
+  font-size: 1em;
+  height:1em;
+  line-height: 1em;
 }
 
 .footer_nav li a, .footer_nav li a:visited {
@@ -146,9 +182,100 @@ h5 { font-size: 1em; }
   color: #80392c;
 }
 
-/* Image Size */
+/*
+ * Rounded Boxes
+ */
 
-.full-width, .full-width .vc_figure, .full-width .vc_figure div,
-.full-width .vc_figure img {
+.site-content .rounded-box-gray, .site-content .rounded-box-brown,
+.site-content .rounded-box-trans-white {
+  border-radius: 1.5em;
+  border-bottom-left-radius: 0px;
+  padding: 3em;
+}
+
+.rounded-box-gray, .rounded-box-brown, .rounded-box-trans-white {
+  border-radius: 1.5em;
+  border-bottom-left-radius: 0px;
+  padding: 3em;
+}
+
+
+.rounded-box-gray {
+ background-color: #ebebeb;
+ color: #fff;
+}
+
+.rounded-box-brown {
+  background-color: #80392c;
+  color: #fff;
+}
+
+.rounded-box-trans-white {
+  background-color: #fff;
+  opacity: 0.8;
+  color: #80392c;
+}
+
+.rounded-box-trans-white h4.cq-bannerblock-title,
+.rounded-box-trans-white .cq-bannerblock-desc {
+  color: #80392c;
+}
+
+/*
+ * Buttons
+ */
+
+.bttn-blue a {
+  font-family: 'Proxima Nova Light';
+  border-radius: 0.75em;
+  border-bottom-left-radius: 0px;
+  padding: .75em 1.5em;
+}
+
+.bttn-blue a {
+  background-color: #4d7bde;
+  color: #fff;
+}
+
+/*
+ * Visual Composer Helper Classes
+ * --------------------------------------------------------------- *
+ */
+
+/*
+ * Images
+ */
+
+.img-100, .img-100 .vc_figure, .img-100 .vc_figure div,
+.img-100 .vc_figure img {
   width: 100%;
+}
+
+/* background-image */
+
+.bg-cover {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/*
+ * Banner
+ */
+
+.site-content .cq-bannerblock-content {
+  top: inherit;
+  -webkit-transform: none;
+  -moz-transform: none;
+  transform: none;
+}
+
+.site-content .cq-bannerblock {
+  height: auto;
+}
+
+.site-content .cq-bannerblock-desc {
+  width: 100%;
+}
+
+h4.cq-bannerblock-title {
 }
