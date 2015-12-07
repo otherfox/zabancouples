@@ -76,7 +76,6 @@ add_action( 'wp_head', 'zabancouples_javascript_detection', 0 );
  * @since Zaban Couples 1.0
  */
 function zabancouples_scripts() {
-
     wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.min.css');
     wp_enqueue_style('typography', get_template_directory_uri() . '/css/typography.css');
     wp_enqueue_style('grid', get_template_directory_uri() . '/css/grid.css');
@@ -109,3 +108,16 @@ add_theme_support( 'custom-header', $custom_header_args );
  */
 
 show_admin_bar( false );
+
+/**
+ * Font-Awesome Shortcode
+ */
+
+function icon_func( $atts ) {
+	$atts = shortcode_atts( array(
+		'class' => '',
+	), $atts, 'icon' );
+
+	return '<i class="fa '.$atts['class'].'"></i>';
+}
+add_shortcode( 'icon', 'icon_func' );
