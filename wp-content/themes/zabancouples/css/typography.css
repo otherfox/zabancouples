@@ -33,24 +33,25 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
+  margin: 0;
+  font-family: 'Proxima Nova Bold';
 }
 
 h1 {
-    font-family: 'Proxima Nova Bold';
-    color: white;
-    font-size: 3rem;
+  font-family: 'Proxima Nova Bold';
+  color: white;
+  font-size: 3em;
 }
 
 p {
-    font-family: 'Proxima Nova Regular';
-    margin-top: 0;
-    margin-bottom: 1rem;
+  font-family: 'Proxima Nova Regular';
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 
 hr {
-    box-sizing: content-box;
-    border-width: 1px;
-    border-style: solid;
-    height: 0;
+  box-sizing: content-box;
+  border-width: 1px;
+  border-style: solid;
+  height: 0;
 }

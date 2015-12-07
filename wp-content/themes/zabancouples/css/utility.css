@@ -146,11 +146,11 @@
   margin-top: 3em !important;
 }
 
-.m-t-xlg {
+.m-t-xl {
   margin-top: 4em !important;
 }
 
-.m-t-xxlg {
+.m-t-xxl {
   margin-top: 5em !important;
 }
 
@@ -176,6 +176,20 @@
   margin-bottom: 3em !important;
 }
 
+.m-y-xl {
+  margin-top: 4em !important;
+  margin-bottom: 4em !important;
+}
+
+.m-y-xxl {
+  margin-top: 5em !important;
+  margin-bottom: 5em !important;
+}
+
+.m-y-xxxl {
+  margin-top: 6em !important;
+  margin-bottom: 6em !important;
+}
 
 /*
  * Padding utility classes
