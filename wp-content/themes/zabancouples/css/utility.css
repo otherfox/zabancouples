@@ -1,6 +1,15 @@
 /*
+ * Width utility classes
+ */
+
+ .site-content .full-width {
+   width: 100%;
+ }
+
+/*
  * Alignment utility classes
  */
+
 .center-block {
   display: block;
   margin-left: auto;
@@ -43,6 +52,7 @@
 /*
  * Margin utility classes
  */
+
 .m-a-0 {
   margin: 0 !important;
 }
