@@ -32,6 +32,10 @@
     font-style: normal;
 }
 
+body {
+    font-family: 'Proxima Nova Light', Helvetica, Arial, sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-family: 'Proxima Nova Bold';
@@ -44,7 +48,7 @@ h1 {
 }
 
 p {
-  font-family: 'Proxima Nova Regular';
+  font-family: 'Proxima Nova Light';
   margin-top: 0;
   margin-bottom: 1em;
 }
