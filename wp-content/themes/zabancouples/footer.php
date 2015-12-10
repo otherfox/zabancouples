@@ -12,7 +12,7 @@
 </div><!-- .site-content -->
 <div id="footer">
   <div class="row container">
-    <div class="left">
+    <div class="footer-logo">
       <img src="<?php echo get_template_directory_uri()?>/images/footer-logo.png" />
     </div>
     <?php wp_nav_menu(array('menu' => 'Main Menu', 'menu_class' => 'footer_nav')); ?>

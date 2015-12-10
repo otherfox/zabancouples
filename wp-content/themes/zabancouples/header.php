@@ -23,11 +23,14 @@
 <body <?php body_class(); ?>>
   <div class="container-fluid">
     <div id="header">
-      <div class="container row text-center p-t">
+      <div class="container">
 				<div class="logo">
 					<h1>
-            <img style=" max-width: <?php echo get_custom_header()->width ?>px"	src="<?php header_image(); ?>" alt="<?php bloginfo('name') ?>" />
+            <img	src="<?php header_image(); ?>" alt="<?php bloginfo('name') ?>" />
 					</h1>
+				</div>
+				<div>
+				<div class="mobile-menu-toggle"><i class="fa fa-bars"></i></div>
 				</div>
         <?php wp_nav_menu(array('menu' => 'Main Menu', 'menu_class' => 'header_nav')); ?>
       </div>
