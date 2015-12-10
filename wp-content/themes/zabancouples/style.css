@@ -20,6 +20,7 @@ Text Domain: zabancouples
  * dk-blue: #405bc0 > e.g. Sidebar Contact Form Header
  * md-blue: #4d7bde > e.g. Button BG
  * lt-blue: #7493ee > e.g. Home Footer BG
+ * ltr-blue: #cad6f9 > e.g. Home Footer input BG
  * md-gray: #939393 > e.g. Text Gray
  * lt-gray: #ebebeb > e.g. Sidebar Contact Form BG
  * white: #ffffff
@@ -56,9 +57,10 @@ h5 {
 
 .c-brown { color: #80392c; }
 .c-blue { color: #405bc0; }
+.c-white { color: #ffffff; }
 
 /*
- * Container
+ * Containers / Wrappers
  * --------------------------------------------------------------- *
  */
 
@@ -70,17 +72,33 @@ h5 {
   z-index: 0;
 }
 
-.site-content .container, .site-content .vc_row-fluid {
+.site-content .container, .site-content .vc_row-fluid,
+.site-content .wrapper-container {
   width: 100%;
   padding: 0 10px;
   margin-left: auto;
   margin-right: auto;
 }
 
-@media (min-width: 760px ) {
+@media (min-width: 1000px ) {
+  .site-content .container, .site-content .vc_row-fluid {
+    width: 85%;
+    padding: 0;
+  }
+  .site-content .wrapper-container {
+    width: 100%;
+    padding: 0 7.5%;
+  }
+}
+
+@media (min-width: 1300px ) {
   .site-content .container, .site-content .vc_row-fluid {
     width: 75%;
     padding: 0;
+  }
+  .site-content .wrapper-container {
+    width: 100%;
+    padding: 0 12.5%;
   }
 }
 
@@ -194,6 +212,7 @@ h5 {
 
 /*
  * Rounded Boxes
+ * --------------------------------------------------------------- *
  */
 
 .site-content .rounded-box-gray, .site-content .rounded-box-brown,
@@ -238,18 +257,102 @@ h5 {
 
 /*
  * Buttons
+ * --------------------------------------------------------------- *
  */
 
-.bttn-blue a {
+.bttn-blue a, .gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=image],
+.gform_wrapper .gform_footer input[type=submit] {
   font-family: 'Proxima Nova Light';
+  border: none;
   border-radius: 0.75em;
   border-bottom-left-radius: 0px;
   padding: .75em 1.5em;
 }
 
-.bttn-blue a {
+.bttn-blue a, .gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=image],
+.gform_wrapper .gform_footer input[type=submit] {
   background-color: #4d7bde;
   color: #fff;
+}
+
+/*
+ * Text Inputs
+ * --------------------------------------------------------------- *
+ */
+
+.site-content .gform_wrapper input {
+  border: 2px solid #939393;
+  color: #939393;
+  border-radius: 0.75em;
+  border-bottom-left-radius: 0px;
+  padding: .75em 1em !important;
+}
+
+.site-content .gform_wrapper :focus {
+  border-color: #4d7bde;
+  color: #4d7bde;
+}
+
+/*
+ * Gravity Form Helper Classes
+ * --------------------------------------------------------------- *
+ */
+
+ /* Inline Form */
+
+.site-content .gform_wrapper .inline-form {
+   width: 150%;
+ }
+
+.site-content .gform_wrapper .inline-form .gform_body,
+.site-content .gform_wrapper .inline-form .gform_footer {
+  float: left;
+  clear: none;
+}
+
+.site-content .gform_wrapper .inline-form  .gform_footer {
+    padding: .525em 0 .625em;
+}
+
+.site-content .gform_wrapper .inline-form  label.gfield_label+div.ginput_container {
+  margin-top: 0;
+}
+
+.site-content .gform_wrapper .inline-form input {
+  border: none;
+  border-radius: 0px;
+  border-top-left-radius: .75em;
+}
+
+.site-content .gform_wrapper .inline-form input.large {
+  width: 100%;
+}
+
+.site-content .gform_wrapper .inline-form .gform_footer input.button,
+.site-content .gform_wrapper .inline-form .gform_footer input[type=image],
+.site-content .gform_wrapper .inline-form .gform_footer input[type=submit] {
+  border-radius: 0px;
+  border-top-right-radius: .75em;
+  border-bottom-right-radius: .75em;
+}
+
+/* Color Themes */
+
+/* Brown */
+.site-content .gform_wrapper .brown-form input {
+  background-color: #cad6f9;
+}
+
+.site-content .gform_wrapper .brown-form .gform_footer input.button,
+.site-content .gform_wrapper .brown-form .gform_footer input[type=image],
+.site-content .gform_wrapper .brown-form .gform_footer input[type=submit] {
+  background-color: #80392c;
+}
+
+.site-content .gform_wrapper .brown-form :focus {
+  color: #80392c;
 }
 
 /*
@@ -322,15 +425,35 @@ h5 {
 
 /* Banner Header */
 
-h4.cq-bannerblock-title {}
-.banner-header-bkg h4.cq-bannerblock-title::after {
+.banner-header-right-bkg h4.cq-bannerblock-title::after,
+.banner-header-right-bkg h3::after,
+.banner-header-right-bkg h2::after,
+.banner-header-left-bkg h4.cq-bannerblock-title::before,
+.banner-header-left-bkg h3::before,
+.banner-header-left-bkg h2::before {
   content: '';
   border-bottom: 3px solid #fff;
-  z-index: 100;
   position: absolute;
   width: 100%;
+}
+
+.banner-header-right-bkg h4.cq-bannerblock-title::after,
+.banner-header-right-bkg h3::after,
+.banner-header-right-bkg h2::after {
   margin-left: 20px;
   height: .5em;
+}
+.banner-header-left-bkg h4.cq-bannerblock-title::before,
+.banner-header-left-bkg h3::before,
+.banner-header-left-bkg h2::before {
+  left: -100%;
+  height: .5em;
+}
+.banner-header-left-bkg h2::before,
+.banner-header-left-bkg h3::before,
+.banner-header-right-bkg h2::after,
+.banner-header-right-bkg h3::after {
+  height: .7em;
 }
 
 /* Banner Button */
@@ -343,7 +466,7 @@ h4.cq-bannerblock-title {}
 /* Banner Content Helpers */
 
 .site-content .banner-content-right {
-  width: 50%;
+  max-width: 800px;
   padding: 2em;
   float: right;
 }
