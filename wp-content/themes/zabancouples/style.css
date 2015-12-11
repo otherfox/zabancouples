@@ -53,7 +53,10 @@ body {
 a { text-decoration: none;}
 p { font-size: 1em; }
 h1 { font-size: 3em; }
-h2 { font-size: 2.5em; }
+h2 {
+  font-size: 2.5em;
+  color: #80392c;
+}
 h3 { font-size: 2em; }
 h4 { font-size: 1.5em; }
 h5 {
@@ -77,7 +80,18 @@ h5 {
 
 .c-brown { color: #80392c; }
 .c-blue { color: #405bc0; }
-.c-white { color: #ffffff; }
+.c-white, .c-white p, .c-white h1, .c-white h2, .c-white h3, .c-white h4,
+.c-white h5, .c-white h6, .c-white .cq-bannerblock-content,
+.c-white  h4.cq-bannerblock-title {
+  color: #ffffff;
+}
+
+/* Helpers */
+.alignright {
+  float: right;
+  clear: both;
+  text-align: right;
+}
 
 /*
  * Containers / Wrappers
@@ -93,7 +107,7 @@ h5 {
 }
 
 .site-content .container, .site-content .vc_row-fluid,
-.site-content .wrapper-container {
+.site-content .wrapper-container, .site-content .cq-bannerblock-content {
   width: 100%;
   /*padding: 0 10px;*/
   margin-left: auto;
@@ -101,7 +115,8 @@ h5 {
 }
 
 @media (min-width: 768px ) {
-  .site-content .container, .site-content .vc_row-fluid {
+  .site-content .container, .site-content .vc_row-fluid,
+  .site-content .cq-bannerblock-content {
     width: 90%;
     padding: 0;
   }
@@ -112,7 +127,8 @@ h5 {
 }
 
 @media (min-width: 1440px ) {
-  .site-content .container, .site-content .vc_row-fluid {
+  .site-content .container, .site-content .vc_row-fluid,
+  .site-content .cq-bannerblock-content {
     width: 75%;
     padding: 0;
   }
@@ -322,13 +338,17 @@ h5 {
 .site-content .rounded-box-trans-white, .site-content .rounded-box-brown-border {
   border-radius: 1.5em;
   border-bottom-left-radius: 0px;
-  padding: 3em;
+  padding: 1.5em 2em;
 }
 
 /* Gray */
 .rounded-box-gray {
   background-color: #ebebeb;
-  color: #fff;
+}
+
+.rounded-box-gray h1, .rounded-box-gray h2, .rounded-box-gray h3,
+.rounded-box-gray h4, .rounded-box-gray h5, .rounded-box-gray h6 {
+  color: #405bc0;
 }
 
 /* Brown */
@@ -363,14 +383,17 @@ h5 {
  * --------------------------------------------------------------- *
  */
 
-.bttn-blue a, .gform_wrapper .gform_footer input.button,
+.bttn-blue a, .bttn-white-border, .gform_wrapper .gform_footer input.button,
 .gform_wrapper .gform_footer input[type=image],
 .gform_wrapper .gform_footer input[type=submit] {
   font-family: 'Proxima Nova Light';
   border: none;
   border-radius: 0.75em;
   border-bottom-left-radius: 0px;
-  padding: .75em 1.5em;
+  height: 3em;
+  display: inline-block;
+  padding: .75em 1.5em !important;
+  line-height: 1.5em;
 }
 
 .bttn-blue a, .gform_wrapper .gform_footer input.button,
@@ -380,12 +403,18 @@ h5 {
   color: #fff;
 }
 
+.bttn-white-border {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
 /*
  * Text Inputs
  * --------------------------------------------------------------- *
  */
 
-.site-content .gform_wrapper input {
+.site-content .gform_wrapper input, .gform_wrapper textarea {
   border: 2px solid #939393;
   color: #939393;
   border-radius: 0.75em;
@@ -402,6 +431,12 @@ h5 {
  * Gravity Form Helper Classes
  * --------------------------------------------------------------- *
  */
+
+ /* Hide Labels */
+
+ .site-content .gform_wrapper .top_label .gfield_label {
+   display: none;
+ }
 
  /* Inline Form */
 
@@ -503,18 +538,27 @@ h5 {
 }
 
 .site-content .cq-bannerblock-desc {
-  width: 100%;
+  width: auto;
 }
 
-.site-content .banner-button-right {
+.site-content .banner-bttn-right,
+.site-content .banner-bttn-right .cq-bannerblock-buttonarea {
   text-align: center;
   padding-top: 2em;
 }
 
 @media (min-width: 768px) {
-  .site-content .banner-button-right {
+  .site-content .banner-bttn-right {
     text-align: right;
     padding-top: 0;
+  }
+
+  .site-content .banner-bttn-right .cq-bannerblock-buttonarea {
+    position: absolute;
+    right: 0;
+    top: 1.5em;
+    top: 17%;
+    padding: 0;
   }
 }
 
@@ -564,6 +608,7 @@ h5 {
 .banner-header-left-bkg h3::before,
 .banner-header-left-bkg h2::before {
   left: -100%;
+  margin-left: -20px;
   height: .5em;
 }
 .banner-header-left-bkg h2::before,
@@ -586,6 +631,11 @@ h5 {
   max-width: 800px;
   padding: 2em;
   float: right;
+}
+
+.site-content .banner-content-left .cq-bannerblock-content,
+.site-content .banner-content-left {
+  text-align: left;
 }
 
 /* Top Banner > creates the bkg for the header */
