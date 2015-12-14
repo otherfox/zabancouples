@@ -63,6 +63,11 @@ h5 {
   font-size: 1em;
   color: #80392c;
 }
+h6 { font-size: 1.2em; }
+
+hr {
+  width: 50px;
+}
 
 @media (min-width: 768px ) {
   body {
@@ -547,6 +552,10 @@ h5 {
   padding-top: 2em;
 }
 
+.site-content .banner-bttn-left .cq-bannerblock-content {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .site-content .banner-bttn-right {
     text-align: right;
@@ -559,6 +568,24 @@ h5 {
     top: 1.5em;
     top: 17%;
     padding: 0;
+  }
+
+  .site-content .banner-bttn-left .cq-bannerblock-buttonarea {
+    position: absolute;
+    left: 0;
+    text-align: center;
+    top: 30%;
+    width: 30%;
+    padding: 0;
+  }
+
+  .site-content .banner-bttn-left .cq-bannerblock-content {
+    padding-left: 35%;
+    text-align: left;
+  }
+
+  .site-content .banner-bttn-left .cq-bannerblock-content hr {
+    margin: 0 0 .5em 0;
   }
 }
 
@@ -642,6 +669,7 @@ h5 {
 
 .site-content .top-banner {
   width: 100%;
+  margin-bottom: 0;
 }
 
 .site-content .top-banner .cq-bannerblock {
@@ -652,5 +680,36 @@ h5 {
 @media (min-width: 768px ) {
   .site-content .top-banner .cq-bannerblock {
     margin-top: 290px;
+  }
+}
+
+/* Banner Bttn right small */
+
+.site-content .banner-bttn-right-sm {
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px ) {
+  .site-content .banner-bttn-right-sm {
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .site-content .banner-bttn-right-sm .wpb_column:first-child{
+    padding-top: .75em;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1440px ) {
+  .site-content .banner-bttn-right-sm {
+    width: 100%;
+    padding-left: 12.5%;
+    padding-right: 12.5%;
   }
 }
