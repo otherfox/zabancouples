@@ -388,16 +388,17 @@ hr {
  * --------------------------------------------------------------- *
  */
 
-.bttn-blue a, .bttn-white-border, .gform_wrapper .gform_footer input.button,
-.gform_wrapper .gform_footer input[type=image],
-.gform_wrapper .gform_footer input[type=submit] {
+.bttn-blue a, .bttn-white-border,
+.site-wrapper .gform_wrapper .gform_footer input.button,
+.site-wrapper .gform_wrapper .gform_footer input[type=image],
+.site-wrapper .gform_wrapper .gform_footer input[type=submit] {
   font-family: 'Proxima Nova Light';
   border: none;
   border-radius: 0.75em;
   border-bottom-left-radius: 0px;
-  height: 3em;
+  height: 2.5em;
   display: inline-block;
-  padding: .75em 1.5em !important;
+  padding: .5em 1.5em;
   line-height: 1.5em;
 }
 
@@ -455,8 +456,9 @@ hr {
   clear: none;
 }
 
-.site-content .gform_wrapper .inline-form  .gform_footer {
-    padding: .525em 0 .625em;
+.site-content .gform_wrapper .inline-form .gform_footer {
+    padding: 0;
+    margin: 0;
 }
 
 .site-content .gform_wrapper .inline-form  label.gfield_label+div.ginput_container {
