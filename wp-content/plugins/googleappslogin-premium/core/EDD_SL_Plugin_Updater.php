@@ -13,9 +13,9 @@
  * Allows plugins to use their own update API.
  *
  * @author Pippin Williamson and Dan Lester
- * @version 4
+ * @version 6
  */
-class EDD_SL_Plugin_Updater4 {
+class EDD_SL_Plugin_Updater6 {
 	private $api_url  = '';
 	private $api_data = array();
 	private $name     = '';
@@ -24,7 +24,7 @@ class EDD_SL_Plugin_Updater4 {
 	private $license_status_optname = '';
 	private $license_settings_url = '';
 
-	private $license_warning_delay = 7200; // Two hours = 7200 secs
+	private $license_warning_delay = 3600;
 
 	/**
 	 * Class constructor.
@@ -152,14 +152,17 @@ class EDD_SL_Plugin_Updater4 {
 
 		// Do actual license check now
 		if (!$this->auto_license_checked) {
+
 			$api_check = $this->api_request( 'check_license', array( 'slug' => $this->slug ) );
+
+			// Returns only valid or invalid, but also contains expires and renewal_link
 
 			// Record latest status from license server
 			$license_status = $this->update_license_status_option($api_check);
 			$this->auto_license_checked = true;
 
-			// If we got site_inactive, then trying activating now
-			if (isset($license_status['status']) && $license_status['status'] == 'site_inactive') {
+			// If we got invalid, then trying activating now
+			if (isset($license_status['status']) && ($license_status['status'] == 'invalid' || $license_status['status'] == 'site_inactive')) {
 				$license_status = $this->edd_license_activate(); // calls update_license_status_option
 			}
 		}
@@ -259,9 +262,10 @@ class EDD_SL_Plugin_Updater4 {
 	}
 
 
-	protected function update_license_status_option($api_response) {
+	protected function update_license_status_option($api_response)
+	{
 
-		if ($api_response === false) {
+		if ($api_response === false || (is_null($api_response) && !empty($this->api_data['license']))) {
 			return;
 			// Probably unable to reach server this time
 		}
@@ -269,19 +273,21 @@ class EDD_SL_Plugin_Updater4 {
 		$license_status = array('license_id' => $this->api_data['license']);
 
 		// Problem such as missing license key?
-		$license_status['status'] = 'invalid';
-		if (is_null($api_response)) {
-			$license_status['status'] = 'invalid';
+		if (empty($this->api_data['license']) && is_null($api_response)) {
+			$license_status['status'] = 'empty';
 		}
-		elseif (isset($api_response->license_check)) { // Probably called get_version
+		else if (isset($api_response->license_check)) { // Probably called get_version
 			$license_status['status'] = $api_response->license_check;
 		}
-		else if (isset($api_response->license)) { // check_license
-			$license_status['status'] = $api_response->license;
+		else if (isset($api_response->error)) { // activate_license
+			$license_status['status'] = $api_response->error;
 		}
-		else { // Call was activate_license
+		else if (isset($api_response->license)) {
+			$license_status['status'] = $api_response->license; // check_license
+		}
+		else { // Call was activate_license or check_license
 			$license_status['status'] = isset($api_response->error) ? $api_response->error :
-				($api_response->success ? 'valid' : 'invalid');
+				(isset($api_response->success) && $api_response->success ? 'valid' : 'invalid');
 		}
 
 		if (!in_array($license_status['status'], array('valid', 'invalid', 'missing', 'item_name_mismatch', 'expired', 'site_inactive', 'inactive', 'disabled', 'empty'))) {
@@ -515,6 +521,10 @@ class EDD_SL_Plugin_Updater4 {
 		    && (!isset($license_status['result_cleared']) || !$license_status['result_cleared'])) {
 			// Wait a couple of days before warning about the issue - give them time to finish setup first
 			if (!isset($license_status['first_check_time']) || $license_status['first_check_time'] < time() - $this->license_warning_delay) {
+
+				if ($license_status['license_id'] == '') {
+					$license_status['status'] = 'empty';
+				}
 
 				// 'valid', 'invalid', 'missing', 'item_name_mismatch', 'expired', 'site_inactive', 'inactive', 'disabled', 'empty'
 				switch ($license_status['status']) {

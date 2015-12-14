@@ -474,7 +474,7 @@ class commercial_google_apps_login extends core_google_apps_login {
 	
 	protected function get_google_logout_url() {
 		$redirect_url = !empty($_GET['redirect_to']) ? $_GET['redirect_to']
-		: $this->get_login_url().'?loggedout=true&galoggedout=true';
+		: $this->get_login_url().'?galoggedout=true&loggedout=true';
 			
 		$continueurl = 'https://www.google.com/accounts/Logout?continue='
 				.urlencode('https://appengine.google.com/_ah/logout?continue='
@@ -507,13 +507,13 @@ class commercial_google_apps_login extends core_google_apps_login {
 			$license_key = $options['ga_license_key'];
 		}
 	
-		if( !class_exists( 'EDD_SL_Plugin_Updater4' ) ) {
+		if( !class_exists( 'EDD_SL_Plugin_Updater6' ) ) {
 			// load our custom updater
 			include( dirname( __FILE__ ) . '/EDD_SL_Plugin_Updater.php' );
 		}
 			
 		// setup the updater
-		$edd_updater = new EDD_SL_Plugin_Updater4( WPGLOGIN_GA_STORE_URL, $this->my_plugin_basename(),
+		$edd_updater = new EDD_SL_Plugin_Updater6( WPGLOGIN_GA_STORE_URL, $this->my_plugin_basename(),
 				array(
 						'version' 	=> $this->PLUGIN_VERSION,
 						'license' 	=> $license_key,

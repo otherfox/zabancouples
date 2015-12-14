@@ -10,6 +10,8 @@ class core_google_apps_login {
 		$this->add_actions();
 		register_activation_hook($this->my_plugin_basename(), array( $this, 'ga_activation_hook' ) );
 	}
+
+	protected static $gal_cookie_name = 'wordpress_google_apps_login';
 	
 	// May be overridden in basic or premium
 	public function ga_activation_hook($network_wide) {
@@ -22,8 +24,8 @@ class core_google_apps_login {
 	protected $newcookievalue = null;
 	protected function get_cookie_value() {
 		if (!$this->newcookievalue) {
-			if (isset($_COOKIE['google_apps_login'])) {
-				$this->newcookievalue = $_COOKIE['google_apps_login'];
+			if (isset($_COOKIE[self::$gal_cookie_name])) {
+				$this->newcookievalue = $_COOKIE[self::$gal_cookie_name];
 			}
 			else {
 				$this->newcookievalue = md5(rand());
@@ -180,6 +182,9 @@ class core_google_apps_login {
 									+ (isset($_GET['reauth']) ? 1 : 0) 
 									+ (isset($_GET['action']) && $_GET['action']=='login' ? 1 : 0)) {
 				$do_autologin = true;
+			}
+			if (isset($_POST['log']) && isset($_POST['pwd'])) { // This was a WP username/password login attempt
+				$do_autologin = false;
 			}
 		}
 		
@@ -417,7 +422,7 @@ class core_google_apps_login {
 	
 	public function ga_init() {
 		if ($GLOBALS['pagenow'] == 'wp-login.php') {
-			setcookie('google_apps_login', $this->get_cookie_value(), time()+36000, '/', defined(COOKIE_DOMAIN) ? COOKIE_DOMAIN : '' );
+			setcookie(self::$gal_cookie_name, $this->get_cookie_value(), time()+36000, '/', defined(COOKIE_DOMAIN) ? COOKIE_DOMAIN : '' );
 		}
 	}
 	
@@ -429,11 +434,11 @@ class core_google_apps_login {
 			$login_url = network_site_url('wp-login.php');
 		} 
 
-		if ((force_ssl_login() || force_ssl_admin()) && strtolower(substr($login_url,0,7)) == 'http://') {
+		if (force_ssl_admin() && strtolower(substr($login_url,0,7)) == 'http://') {
 			$login_url = 'https://'.substr($login_url,7);
 		}
-		
-		return $login_url;
+
+		return apply_filters( 'gal_login_url', $login_url );
 	}
 	
 	// Build our own nonce functions as wp_create_nonce is user dependent,
@@ -712,6 +717,15 @@ class core_google_apps_login {
 		
 		echo '<br class="clear">';
 		if ($saoptions['ga_serviceemail'] != '') {
+			if ($saoptions['ga_serviceid'] != '') {
+				// Display client id
+				echo '<label for="input_ga_serviceid" class="textinput">'.__('Service Account Client ID / Name', 'google-apps-login').'</label>';
+				echo "<div class='gal-lowerinput'>";
+				//echo "<span id='input_ga_serviceid'>".htmlentities($saoptions['ga_serviceid'])."</span>";
+				echo "<div id='input_ga_serviceid' class='gal-admin-scopes-list'>".htmlentities($saoptions['ga_serviceid'])."</div>";
+				echo '</div>';
+				echo '<br class="clear">';
+			}
 			// Display service email
 			echo '<label for="input_ga_serviceemail" class="textinput">'.__('Service Account email address', 'google-apps-login').'</label>';
 			echo "<div class='gal-lowerinput'>";
@@ -728,7 +742,7 @@ class core_google_apps_login {
 			}
 		}
 		
-		echo '<label for="input_ga_keyfileupload" class="textinput gal_jsonkeyfile">'.__('Upload Service Account JSON file', 'google-apps-login').'</label>';
+		echo '<label for="input_ga_keyfileupload" class="textinput gal_jsonkeyfile">'.__('Upload a new Service Account JSON file', 'google-apps-login').'</label>';
 		echo '<label for="input_ga_keyjson" class="textinput gal_jsonkeytext" style="display: none;">'.__('Paste contents of JSON file', 'google-apps-login').'</label>';
 		
 		echo "<div class='gal-lowerinput'>";
@@ -788,7 +802,7 @@ class core_google_apps_login {
 			</table>
 		</p>
 		
-		<p>Here is a comma-separated list of scopes to copy and paste into your Google Apps admin security page (see instructions).
+		<p>Here is a comma-separated list of API Scopes to copy and paste into your Google Apps admin security page (see instructions).
 		<br />
 		<div class="gal-admin-scopes-list"><?php echo htmlentities(implode(', ',array_unique($all_scopes))); ?></div>
 		</p>
@@ -888,7 +902,7 @@ class core_google_apps_login {
 		
 		// Service account settings
 		$newinput['ga_domainadmin'] = isset($input['ga_domainadmin']) ? trim($input['ga_domainadmin']) : '';
-		if (!preg_match('/^([A-Za-z0-9._%+-]+@([0-9a-z-]+\.)?[0-9a-z-]+\.[a-z]{2,7})?$/', $newinput['ga_domainadmin'])) {
+		if (!preg_match('/^([A-Za-z0-9._%+-]+@([0-9a-z-]+\.)*[0-9a-z-]+\.[a-z]{2,7})?$/', $newinput['ga_domainadmin'])) {
 			add_settings_error(
 			'ga_domainadmin',
 			'invalid_email',
@@ -908,10 +922,12 @@ class core_google_apps_login {
 			
 			$kfu = new gal_keyfile_uploader('ga_keyfileupload', isset($input['ga_keyjson']) ? $input['ga_keyjson'] : '');
 			$newemail = $kfu->getEmail();
+			$newid = $kfu->getId();
 			$newkey = $kfu->getKey();
 			$newprint = $kfu->getPrint();
-			if ($newemail != '' && $newkey != '') {
+			if ($newemail != '' && $newkey != '' && $newid != '') {
 				$saoptions['ga_serviceemail'] = $newemail;
+				$saoptions['ga_serviceid'] = $newid;
 				$saoptions['ga_sakey'] = $newkey;
 				$saoptions['ga_pkey_print'] = $newprint;
 				$this->save_sa_option($saoptions);
@@ -940,11 +956,11 @@ class core_google_apps_login {
 				'ga_jsonkeyfile|file_upload_error2' => __('Error with file upload on the server - file was too large', 'google-apps-login'),
 				'ga_jsonkeyfile|file_upload_error6' => __('Error with file upload on the server - no temp directory exists', 'google-apps-login'),
 				'ga_jsonkeyfile|file_upload_error7' => __('Error with file upload on the server - failed to write to disk', 'google-apps-login'),
-				'ga_jsonkeyfile|no_content' => __('JSON key file was empty'),
-				'ga_jsonkeyfile|decode_error' => __('JSON key file could not be decoded correctly'),
-				'ga_jsonkeyfile|missing_values' => __('JSON key file does not contain all of client_email, private_key, and type'),
-				'ga_jsonkeyfile|not_serviceacct' => __('JSON key file does not represent a Service Account'),
-				'ga_jsonkeyfile|bad_pem' => __('Key cannot be coerced into a PEM key - invalid format in private_key of JSON key file')
+				'ga_jsonkeyfile|no_content' => __('JSON key file was empty', 'google-apps-login'),
+				'ga_jsonkeyfile|decode_error' => __('JSON key file could not be decoded correctly', 'google-apps-login'),
+				'ga_jsonkeyfile|missing_values' => __('JSON key file does not contain all of client_email, client_id, private_key, and type', 'google-apps-login'),
+				'ga_jsonkeyfile|not_serviceacct' => __('JSON key file does not represent a Service Account', 'google-apps-login'),
+				'ga_jsonkeyfile|bad_pem' => __('Key cannot be coerced into a PEM key - invalid format in private_key of JSON key file', 'google-apps-login')
 		);
 		if (isset($local_error_strings[$fielderror])) {
 			return $local_error_strings[$fielderror];
@@ -1021,7 +1037,7 @@ class core_google_apps_login {
 		}
 
 		// Set defaults
-		foreach (array('ga_sakey', 'ga_serviceemail', 'ga_pkey_print') as $k) {
+		foreach (array('ga_sakey', 'ga_serviceemail', 'ga_serviceid', 'ga_pkey_print') as $k) {
 			if (!isset($ga_sa_options[$k])) {
 				$ga_sa_options[$k] = '';
 			}
@@ -1071,8 +1087,8 @@ class core_google_apps_login {
 	protected function calculate_instructions_url($refresh='n') {
 		return add_query_arg(
 					array( 'garedirect' => urlencode( $this->get_login_url() ),
-							'gaorigin' => urlencode( (is_ssl() || force_ssl_login() || force_ssl_admin() 
-											? 'https://' : 'http://').$_SERVER['HTTP_HOST'].'/' ),
+							'gaorigin' => urlencode( (is_ssl() || force_ssl_admin()
+											? 'https://' : 'http://').$_SERVER['HTTP_HOST'] ),
 							'ganotms' => is_multisite() ? 'false' : 'true',
 							'gar' => urlencode( $refresh ),
 							'utm_source' => 'Admin%20Instructions',
