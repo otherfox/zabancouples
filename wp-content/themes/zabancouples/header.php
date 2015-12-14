@@ -25,7 +25,7 @@
     <div id="header">
       <div class="container">
 				<div class="logo">
-					<h1>
+					<h1 class="m-b-0">
             <img	src="<?php header_image(); ?>" alt="<?php bloginfo('name') ?>" />
 					</h1>
 				</div>
