@@ -27,10 +27,11 @@ Text Domain: zabancouples
  *
  * MEDIA Queries
  * --------------------------------------------------------------- *
- * 13in Monitor > 1440px
- * ipad > 768px
- * mobile landscape > 550px
- * mobile portrait > 400px
+ * 13in Monitor > xl > 1440px
+ * sm Monitor > lg > 990px
+ * ipad > md > 768px
+ * mobile landscape > sm > 540px
+ * mobile portrait > xs > 400px
  *
  */
 
@@ -711,5 +712,17 @@ hr {
   .site-content .banner-bttn-right-sm .wpb_column:first-child{
     padding-top: .75em;
     text-align: left;
+  }
+}
+
+/* Helpers */
+
+.fs-xs-2-em {
+  font-size: 2em;
+}
+
+@media (width:990px) {
+  .fs-sm-2-em {
+    font-size: initial;
   }
 }

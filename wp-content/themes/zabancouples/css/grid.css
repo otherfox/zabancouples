@@ -748,7 +748,7 @@ XS < 540px
   }
 }
 
-@media (min-width: 1200px ) {
+@media (min-width: 1440px ) {
 
   .col-xl-1, .w-xl-1 {
     width: 8.333333%;
