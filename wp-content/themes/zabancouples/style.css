@@ -717,12 +717,11 @@ hr {
 
 /* Helpers */
 
-.fs-xs-2-em {
-  font-size: 2em;
-}
+.fs-xs-2-em { font-size: 2em; }
+.va-m { vertical-align: middle; }
 
 @media (width:990px) {
-  .fs-sm-2-em {
+  .fs-xs-2-em {
     font-size: initial;
   }
 }
