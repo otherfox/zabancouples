@@ -725,6 +725,12 @@ hr {
   }
 }
 
+/* Home */
+
+.site-content .home-banner .cq-bannerblock-desc {
+  width: auto;
+}
+
 /* Helpers */
 
 .fs-xs-2-em { font-size: 2em; }
