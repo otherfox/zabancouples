@@ -409,12 +409,18 @@ hr {
   line-height: 1.25em;
 }
 
+.bttn-blue a {
+  line-height: 1.5em;
+}
+
 .bttn-blue a, .gform_wrapper .gform_footer input.button,
 .gform_wrapper .gform_footer input[type=image],
 .gform_wrapper .gform_footer input[type=submit] {
   background-color: #4d7bde;
+  border-color: #4d7bde;
   color: #fff;
 }
+
 
 .bttn-white-border {
   background-color: transparent;
