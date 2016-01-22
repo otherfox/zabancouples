@@ -406,7 +406,7 @@ hr {
   height: 2.5em;
   display: inline-block;
   padding: .5em 1.5em;
-  line-height: 1.5em;
+  line-height: 1.25em;
 }
 
 .bttn-blue a, .gform_wrapper .gform_footer input.button,
@@ -585,6 +585,10 @@ hr {
     top: 1.5em;
     top: 17%;
     padding: 0;
+  }
+
+  .site-content .cq-bannerblock-desc {
+    width: 50%;
   }
 
   .site-content .banner-bttn-left .cq-bannerblock-buttonarea {
