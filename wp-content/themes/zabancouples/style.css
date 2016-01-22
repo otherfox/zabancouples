@@ -72,13 +72,13 @@ hr {
 
 @media (min-width: 768px ) {
   body {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
 @media (min-width: 1440px ) {
   body {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -269,8 +269,8 @@ hr {
 
 @media (min-width: 1440px ) {
   .header_nav {
-    font-size: 26px;
-    max-width: 780px;
+    font-size: 22px;
+    max-width: 680px;
   }
 }
 
