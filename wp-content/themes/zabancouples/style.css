@@ -396,9 +396,9 @@ hr {
  */
 
 .bttn-blue a, .bttn-white-border, .bttn-brown-border,
-.site-wrapper .gform_wrapper .gform_footer input.button,
-.site-wrapper .gform_wrapper .gform_footer input[type=image],
-.site-wrapper .gform_wrapper .gform_footer input[type=submit] {
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=image],
+.gform_wrapper .gform_footer input[type=submit] {
   font-family: 'Proxima Nova Light';
   border: none;
   border-radius: 0.75em;
@@ -409,18 +409,44 @@ hr {
   line-height: 1.25em;
 }
 
+.bttn-blue a, .bttn-white-border, .bttn-brown-border,
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=image],
+.gform_wrapper .gform_footer input[type=submit],
+.site-content .cq-bannerblock-buttonlink
+ {
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=image],
+.gform_wrapper .gform_footer input[type=submit] {
+  line-height: 1em;
+}
+
 .bttn-blue a {
   line-height: 1.5em;
 }
 
 .bttn-blue a, .gform_wrapper .gform_footer input.button,
 .gform_wrapper .gform_footer input[type=image],
-.gform_wrapper .gform_footer input[type=submit] {
-  background-color: #4d7bde;
-  border-color: #4d7bde;
+.gform_wrapper .gform_footer input[type=submit],
+.site-content .cq-bannerblock-buttonlink {
+  background-color: #4d7bde !important;
+  border: 2px solid #4d7bde !important;
   color: #fff;
 }
 
+.bttn-blue a:hover, .gform_wrapper .gform_footer input.button:hover,
+.gform_wrapper .gform_footer input[type=image]:hover,
+.gform_wrapper .gform_footer input[type=submit]:hover,
+.site-content .cq-bannerblock-buttonlink:hover {
+  background-color: #fff !important;
+  color: #4d7bde !important;
+}
 
 .bttn-white-border {
   background-color: transparent;
@@ -428,10 +454,20 @@ hr {
   border: 2px solid #fff;
 }
 
+.bttn-white-border:hover {
+  background-color: #fff;
+  color: #80392c;
+}
+
 .bttn-brown-border {
   background-color: transparent;
   color: #80392c;
   border: 2px solid #80392c;
+}
+
+.bttn-brown-border:hover {
+  background-color: #80392c;
+  color: #fff;
 }
 
 /*
@@ -450,6 +486,7 @@ hr {
 .site-content .gform_wrapper :focus {
   border-color: #4d7bde;
   color: #4d7bde;
+  outline: none;
 }
 
 /*
