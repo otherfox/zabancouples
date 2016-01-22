@@ -243,7 +243,7 @@ hr {
   }
 
   .header_nav li {
-    display: inline-block;
+    float: left;
     border-top: 3px solid #fff;
     margin: 0;
   }
@@ -253,7 +253,7 @@ hr {
   }
 
   .header_nav li a, .header_nav li a:visited {
-    padding: 0.5em 0.9em;
+    width: 100%;
     border-bottom-left-radius: 0.8em;
     border-bottom-right-radius: 0.8em;
   }
