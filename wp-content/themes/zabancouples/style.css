@@ -422,6 +422,12 @@ hr {
   border: 2px solid #fff;
 }
 
+.bttn-brown-border {
+  background-color: transparent;
+  color: #80392c;
+  border: 2px solid #80392c;
+}
+
 /*
  * Text Inputs
  * --------------------------------------------------------------- *
