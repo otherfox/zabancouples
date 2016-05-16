@@ -166,7 +166,7 @@ hr {
 }
 
 #header .logo img {
-  max-width: 300px;
+  max-width: 150px;
   width: 60%;
 }
 
@@ -181,10 +181,6 @@ hr {
 @media (min-width: 768px ) {
   #header {
     height: 221px;
-  }
-  #header .logo img {
-    width: 80%;
-    max-width: 445px;
   }
   #header .mobile-menu-toggle {
     display: none;
@@ -293,6 +289,10 @@ hr {
 
 .footer-logo {
   display: none;
+}
+
+.footer-logo img {
+  max-width: 80px;
 }
 
 .footer_nav li a, .footer_nav li a:visited {
