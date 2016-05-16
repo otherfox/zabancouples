@@ -1,6 +1,12 @@
 <?php
 
-require_once( plugin_dir_path(__FILE__).'/core_google_apps_login.php' );
+if (class_exists('core_google_apps_login')) {
+	global $gal_core_already_exists;
+	$gal_core_already_exists = true;
+}
+else {
+	require_once( plugin_dir_path(__FILE__).'/core_google_apps_login.php' );
+}
 
 class commercial_google_apps_login extends core_google_apps_login {
 		
@@ -29,37 +35,30 @@ class commercial_google_apps_login extends core_google_apps_login {
 			// Should we allow this user login to continue?
 			// Don't enforce if Google Login not configured
 			if ($options['ga_disablewplogin'] && $options['ga_clientid'] != '' && $options['ga_clientsecret'] != '') {
-				// Halt if user is on our domain
-				$tryuser = get_user_by('login', $username);
-				if ($tryuser && isset($tryuser->user_email)) {
-					$email = $tryuser->user_email;
-			
-					$domain_list = $this->split_domainslist($options['ga_domainname']);
-			
-					$parts = explode("@", $email);
-					if (count($parts) == 2) { // Pretty likely since got it from WP
-						if (in_array(strtolower($parts[1]), $domain_list)) {
-							$user = new WP_Error('ga_login_error', 
-									sprintf(__('User with email address %s must use Login with Google', 'google-apps-login'),
-											 $email) );
-							// We do not want password check any more
+				global $pagenow;
+				// Don't stop WP logins if on xmlrpc
+				if ($pagenow != 'xmlrpc.php') {
+					// Halt if user is on our domain
+					$tryuser = get_user_by( 'login', $username );
+					if ( $tryuser && isset( $tryuser->user_email ) ) {
+						$email = $tryuser->user_email;
+
+						$domain_list = $this->split_domainslist( $options['ga_domainname'] );
+
+						$parts = explode( "@", $email );
+						if ( count( $parts ) == 2 ) { // Pretty likely since got it from WP
+							if ( in_array( strtolower( $parts[1] ), $domain_list ) ) {
+								$errarray = Array( 'error' => 'ga_user_must_glogin' );
+								wp_redirect( add_query_arg( $errarray, $this->get_login_url() ) );
+								exit;
+								// We do not want password check any more
+							}
 						}
 					}
 				}
 			}
 		}
 		return $user;
-	}
-	
-	protected function checkRegularWPError($user, $username, $password) {
-		if (!empty($username) || !empty($password)) {
-			// Need to redirect back to wp-login.php?error=
-			// to ensure regular WP auth will not override our error
-			// with a successful username/password login
-			$errarray = Array('error' => urlencode($user->get_error_message()));
-			wp_redirect( add_query_arg( $errarray, site_url('wp-login.php')) );
-			exit;
-		}	
 	}
 	
 	protected function createUserOrError($userinfo, $options) {
@@ -120,12 +119,19 @@ class commercial_google_apps_login extends core_google_apps_login {
 			'user_url' => empty($userinfo->link) ? false : $userinfo->link,
 			'role' => $options['ga_defaultrole']
 		);
+
+		$wpuserdata = apply_filters('gal_pre_create_new_user', $wpuserdata, $userinfo);
+		if (is_wp_error($wpuserdata)) {
+			return $wpuserdata; // Should be a WP_Error object
+		}
 		
 		$user_id = wp_insert_user($wpuserdata);
 		
 		if (is_wp_error($user_id)) {
 			return $user_id;
 		}
+
+		do_action('gal_post_create_new_user', $wpuserdata, $userinfo, $user_id);
 		
 		return get_user_by('id', $user_id);		
 	}
@@ -151,7 +157,18 @@ class commercial_google_apps_login extends core_google_apps_login {
 		</script>
 		<?php
 	}
-	
+
+	protected function get_hd() {
+		$options = $this->get_option_galogin();
+		if ($options['ga_forcedomain']) {
+			$domain_list = $this->split_domainslist($options['ga_domainname']);
+			if (count($domain_list) > 0) {
+				return $domain_list[0];
+			}
+		}
+		return '';
+	}
+
 	// ADMIN AND OPTIONS
 	// *****************
 	
@@ -177,7 +194,7 @@ class commercial_google_apps_login extends core_google_apps_login {
 		echo "<input id='input_ga_domainname' name='".$this->get_options_name()."[ga_domainname]' size='40' type='text' value='".esc_attr($options['ga_domainname'])."' class='textinput' />";
 		echo '<br class="clear">';
 		
-		echo "<input id='input_ga_autocreate' name='".$this->get_options_name()."[ga_autocreate]' type='checkbox' ".($options['ga_autocreate'] ? 'checked' : '')." class='checkbox' />";
+		echo "<input id='input_ga_autocreate' name='".$this->get_options_name()."[ga_autocreate]' type='checkbox' ".($options['ga_autocreate'] ? 'checked' : '')." class='checkbox gal_needsdomain' />";
 		echo '<label for="input_ga_autocreate" class="checkbox plain">'.__('Auto-create new users on my domain', 'google-apps-login').'</label>';
 		echo '<br class="clear">';
 
@@ -188,8 +205,13 @@ class commercial_google_apps_login extends core_google_apps_login {
 			echo "</select>";
 			echo '<br class="clear">';
 		}
-		
-		echo "<input id='input_ga_disablewplogin' name='".$this->get_options_name()."[ga_disablewplogin]' type='checkbox' ".($options['ga_disablewplogin'] ? 'checked' : '')." class='checkbox' />";
+
+		echo '<br class="clear">';
+		echo "<input id='input_ga_forcedomain' name='".$this->get_options_name()."[ga_forcedomain]' type='checkbox' ".($options['ga_forcedomain'] ? 'checked' : '')." class='checkbox gal_needsdomain' />";
+		echo '<label for="input_ga_forcedomain" class="checkbox plain">'.__('Force Google login to use accounts on my domain (saves user having to select from multiple Google accounts)', 'google-apps-login').'</label>';
+		echo '<br class="clear">';
+
+		echo "<input id='input_ga_disablewplogin' name='".$this->get_options_name()."[ga_disablewplogin]' type='checkbox' ".($options['ga_disablewplogin'] ? 'checked' : '')." class='checkbox gal_needsdomain' />";
 		echo '<label for="input_ga_disablewplogin" class="checkbox plain">'.__('Disable WordPress username/password login for my domain', 'google-apps-login').'</label>';
 
 		echo '<br class="clear">';
@@ -297,7 +319,7 @@ class commercial_google_apps_login extends core_google_apps_login {
 		$newinput = parent::ga_options_validate($input);
 		
 		$newinput['ga_domainname'] = trim($input['ga_domainname']);
-		if (!preg_match('/^(([0-9a-z-]+\.)*[0-9a-z-]+\.[a-z]{2,7}([ ,]*))*$/', $newinput['ga_domainname'])
+		if (!preg_match('/^(([0-9a-z-]+\.)*[0-9a-z-]+\.[a-z]{2,63}([ ,]*))*$/', $newinput['ga_domainname'])
 					 && $newinput['ga_domainname'] != 'ANY_DOMAIN') {
 			add_settings_error(
 			'ga_domainname',
@@ -307,6 +329,7 @@ class commercial_google_apps_login extends core_google_apps_login {
 					);
 		}
 		$newinput['ga_autocreate'] = isset($input['ga_autocreate']) ? (boolean)$input['ga_autocreate'] : false;
+		$newinput['ga_forcedomain'] = isset($input['ga_forcedomain']) ? (boolean)$input['ga_forcedomain'] : false;
 		$newinput['ga_disablewplogin'] = isset($input['ga_disablewplogin']) ? (boolean)$input['ga_disablewplogin'] : false;
 		$newinput['ga_hidewplogin'] = isset($input['ga_hidewplogin']) ? (boolean)$input['ga_hidewplogin'] : false;
 		
@@ -395,6 +418,7 @@ class commercial_google_apps_login extends core_google_apps_login {
 		return array_merge( parent::get_default_options(), 
 			Array('ga_domainname' => '',
 				  'ga_autocreate' => false,
+				  'ga_forcedomain' => false,
 				  'ga_disablewplogin' => false,
 				  'ga_hidewplogin' => false,
 				  'ga_defaultrole' => get_option('default_role'),
@@ -507,17 +531,17 @@ class commercial_google_apps_login extends core_google_apps_login {
 			$license_key = $options['ga_license_key'];
 		}
 	
-		if( !class_exists( 'EDD_SL_Plugin_Updater6' ) ) {
+		if( !class_exists( 'EDD_SL_Plugin_Updater9' ) ) {
 			// load our custom updater
 			include( dirname( __FILE__ ) . '/EDD_SL_Plugin_Updater.php' );
 		}
 			
 		// setup the updater
-		$edd_updater = new EDD_SL_Plugin_Updater6( WPGLOGIN_GA_STORE_URL, $this->my_plugin_basename(),
+		$edd_updater = new EDD_SL_Plugin_Updater9( $this->WPGLOGIN_GA_STORE_URL, $this->my_plugin_basename(),
 				array(
 						'version' 	=> $this->PLUGIN_VERSION,
 						'license' 	=> $license_key,
-						'item_name' => WPGLOGIN_GA_ITEM_NAME,
+						'item_name' => $this->WPGLOGIN_GA_ITEM_NAME,
 						'author' 	=> 'Dan Lester'
 				),
 				$this->get_eddsl_optname(),
