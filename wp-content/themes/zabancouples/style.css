@@ -427,10 +427,6 @@ hr {
   line-height: 1em;
 }
 
-.bttn-blue a {
-  line-height: 1.5em;
-}
-
 .bttn-blue a, .gform_wrapper .gform_footer input.button,
 .gform_wrapper .gform_footer input[type=image],
 .gform_wrapper .gform_footer input[type=submit],
@@ -764,7 +760,7 @@ hr {
 
 @media (min-width: 768px ) {
   .site-content .banner-bttn-right-sm .wpb_column:first-child{
-    padding-top: .75em;
+    padding-top: .4em;
     text-align: left;
   }
 }
