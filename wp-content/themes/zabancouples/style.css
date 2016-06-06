@@ -777,6 +777,7 @@ hr {
 /* Helpers */
 
 .fs-xs-2-em { font-size: 2em; }
+.fs-1_2-em { font-size: 1.2em; }
 .va-m { vertical-align: middle; }
 
 @media (width:990px) {
