@@ -620,6 +620,7 @@ hr {
   .site-content .banner-bttn-right {
     text-align: right;
     padding-top: 0;
+    margin-right: 25%;
   }
 
   .site-content .banner-bttn-right .cq-bannerblock-buttonarea {
