@@ -279,14 +279,12 @@ hr {
     color: #80392c;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 850px) {
     .header_nav {
-        display: block !important;
+        display: inline-block !important;
         font-family: 'Proxima Nova Light';
         font-size: 20px;
-        max-width: 695px;
         margin: 0 auto;
-        width: 100%;
     }
     .header_nav li {
         float: left;
